@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="20dp">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="새로운 이미지 게시"
+            android:textSize="24sp" />
+
+        <EditText
+            android:id="@+id/post_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="제목"
+            android:inputType="textCapSentences" />
+
+        <EditText
+            android:id="@+id/post_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="top"
+            android:hint="내용"
+            android:inputType="textCapSentences|textMultiLine"
+            android:minLines="3" />
+
+        <Button
+            android:id="@+id/choose_image"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="사진 선택" />
+
+        <ImageView
+            android:id="@+id/chosen_image"
+            android:layout_width="match_parent"
+            android:layout_height="140dp"
+            android:contentDescription="선택한 사진"
+            android:scaleType="centerCrop" />
+
+        <EditText
+            android:id="@+id/account_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="서버 계정 이름"
+            android:inputType="text" />
+
+        <EditText
+            android:id="@+id/account_password"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="서버 비밀번호"
+            android:inputType="textPassword" />
+
+        <Button
+            android:id="@+id/send_post"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="게시하기" />
+
+        <TextView
+            android:id="@+id/upload_status"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="8dp"
+            android:text="제목, 내용, 사진과 서버 계정을 입력해 주세요." />
+    </LinearLayout>
+</ScrollView>

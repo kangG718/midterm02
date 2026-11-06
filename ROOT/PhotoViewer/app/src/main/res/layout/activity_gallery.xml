@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/gallery_root" android:layout_width="match_parent"
+    android:layout_height="match_parent" android:orientation="vertical">
+    <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+        android:orientation="horizontal" android:gravity="center_vertical" android:padding="12dp">
+        <Button android:id="@+id/gallery_back" android:layout_width="wrap_content"
+            android:layout_height="wrap_content" android:text="목록으로" />
+        <TextView android:layout_width="0dp" android:layout_weight="1"
+            android:layout_height="wrap_content" android:text="사진 모아보기"
+            android:textSize="22sp" android:textStyle="bold" android:gravity="end" />
+    </LinearLayout>
+    <TextView android:id="@+id/gallery_count" android:layout_width="match_parent"
+        android:layout_height="wrap_content" android:padding="16dp" android:textSize="16sp" />
+    <TextView android:id="@+id/gallery_empty" android:layout_width="match_parent"
+        android:layout_height="wrap_content" android:padding="24dp" android:gravity="center"
+        android:text="표시할 사진이 없습니다.
+목록에서 동기화한 뒤 다시 열어 주세요." android:visibility="gone" />
+    <androidx.recyclerview.widget.RecyclerView android:id="@+id/gallery_grid"
+        android:layout_width="match_parent" android:layout_height="0dp"
+        android:layout_weight="1" android:padding="8dp" android:clipToPadding="false" />
+</LinearLayout>
