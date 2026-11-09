@@ -1,4 +1,8 @@
 # Ultralytics 🚀 AGPL-3.0 License - https://ultralytics.com/license
+# 기본 기능 실행: python detect.py --source 0
+# 추가 기능 2개 실행: python detect.py --source 0 --watch-zone --reliable-upload
+# 처음 실행할 때 감시 구역을 마우스로 지정하고 Enter를 누르면 감시와 전송 실패 자동 복구가 시작됩니다.
+# 이후에는 저장된 감시 구역을 사용하며, 다시 지정하려면 실행 명령 끝에 --reset-zone을 추가하세요.
 """
 Run YOLOv5 detection inference on images, videos, directories, globs, YouTube, webcam, streams, etc.
 
