@@ -43,8 +43,9 @@ import java.util.UUID;
 
 public class MainActivity extends AppCompatActivity {
     private static final String LOCAL_URL = "http://127.0.0.1:8000";
-    private static final String CLOUD_URL = "https://garamkang.pythonanywhere.com";
-    String site_url = CLOUD_URL;
+    // Set cloudUrl in the ignored local.properties file before building the cloud version.
+    private static final String CLOUD_URL = BuildConfig.CLOUD_URL;
+    String site_url = CLOUD_URL.isEmpty() ? LOCAL_URL : CLOUD_URL;
     TextView textView;
     CloadImage taskDownload;
     PutPost taskUpload;
@@ -141,6 +142,10 @@ public class MainActivity extends AppCompatActivity {
             applySearch();
             textView.setText("동기화 버튼을 눌러 주세요.");
         });
+        if (CLOUD_URL.isEmpty()) {
+            serverSwitch.setChecked(false);
+            serverSwitch.setEnabled(false);
+        }
     }
 
     private void hideSearchKeyboard() {
