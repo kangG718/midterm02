@@ -7,15 +7,17 @@ from datetime import datetime
 
 class ChangeDetection:
     result_prev = []
-    # 로컬 서버 사용 시 HOST를 'http://127.0.0.1:8000'으로 바꾸고, 아래 username/password를 로컬 서버 계정으로 설정한다.
-    HOST = 'https://garamkang.pythonanywhere.com'
-    username = 'garamkang'
-    password = 'notimefor718!'
+    # 서버 주소와 계정은 실행 환경에 설정한다. 예: 로컬 서버는 http://127.0.0.1:8000
+    HOST = os.environ.get('PHOTO_BLOG_HOST', 'http://127.0.0.1:8000')
+    username = os.environ.get('PHOTO_BLOG_USERNAME', '')
+    password = os.environ.get('PHOTO_BLOG_PASSWORD', '')
     token = ''
     title = ''
     text = ''
 
     def __init__(self, names, reliable_upload=False, retry_failed=False):
+        if not self.username or not self.password:
+            raise ValueError('PHOTO_BLOG_USERNAME and PHOTO_BLOG_PASSWORD must be set')
         self.result_prev = [0 for i in range(len(names))]
 
         self.queue = None
@@ -31,7 +33,6 @@ class ChangeDetection:
         })
         res.raise_for_status()
         self.token = res.json()['token']  # 토큰 저장
-        print(self.token)
 
     def add(self, names, detected_current, save_dir, image):
         self.title = ''
