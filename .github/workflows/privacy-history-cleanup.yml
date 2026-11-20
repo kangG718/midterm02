@@ -1,0 +1,33 @@
+name: Remove sensitive Git history
+on:
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  clean-history:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          ref: main
+      - name: Rewrite sensitive commits and update main
+        shell: bash
+        run: |
+          set -euo pipefail
+          expected=$(git rev-parse HEAD)
+          tar -cf "$RUNNER_TEMP/sanitized.tar" -- ROOT/YOLOv5/changedetection.py ROOT/PhotoBlogServer/deploy/pythonanywhere_wsgi.py ROOT/PhotoBlogServer/mysite/settings.py ROOT/PhotoViewer/app/src/main/java/com/example/photoviewer/MainActivity.java
+          export FILTER_BRANCH_SQUELCH_WARNING=1
+          git filter-branch --force \
+            --env-filter 'export GIT_AUTHOR_NAME=kangG718 GIT_AUTHOR_EMAIL=193346080+kangG718@users.noreply.github.com GIT_COMMITTER_NAME=kangG718 GIT_COMMITTER_EMAIL=193346080+kangG718@users.noreply.github.com' \
+            --index-filter "git rm -q -r --cached --ignore-unmatch -- ROOT/YOLOv5/changedetection.py ROOT/PhotoBlogServer/deploy/pythonanywhere_wsgi.py ROOT/PhotoBlogServer/mysite/settings.py ROOT/PhotoViewer/app/src/main/java/com/example/photoviewer/MainActivity.java 'ROOT/모바일웹서비스 프로젝트_공통평가 02_수행 결과 보고서.docx'" \
+            -- main
+          tar -xf "$RUNNER_TEMP/sanitized.tar"
+          git add -- ROOT/YOLOv5/changedetection.py ROOT/PhotoBlogServer/deploy/pythonanywhere_wsgi.py ROOT/PhotoBlogServer/mysite/settings.py ROOT/PhotoViewer/app/src/main/java/com/example/photoviewer/MainActivity.java
+          git config user.name kangG718
+          git config user.email 193346080+kangG718@users.noreply.github.com
+          git commit -m "Restore sanitized project files"
+          git rm -- .github/workflows/privacy-history-cleanup.yml
+          git commit -m "Remove temporary history cleanup workflow"
+          git push --force-with-lease=refs/heads/main:$expected origin HEAD:refs/heads/main
+          git push origin :refs/heads/privacy/sanitize-public-files
