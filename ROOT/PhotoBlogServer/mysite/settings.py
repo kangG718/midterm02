@@ -26,7 +26,10 @@ SECRET_KEY = os.environ.get("DJANGO_SECRET_KEY") or (BASE_DIR / ".django-secret-
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.environ.get("DJANGO_DEBUG", "True").lower() in ("true", "1", "yes")
 
-ALLOWED_HOSTS = ['127.0.0.1', 'localhost', '10.0.2.2', 'garamkang.pythonanywhere.com']
+# Set DJANGO_ALLOWED_HOSTS to a comma-separated list of deployment hostnames.
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost', '10.0.2.2'] + [
+    host.strip() for host in os.environ.get('DJANGO_ALLOWED_HOSTS', '').split(',') if host.strip()
+]
 
 
 # Application definition
