@@ -2,6 +2,12 @@ plugins {
     alias(libs.plugins.android.application)
 }
 
+// Set cloudUrl=https://your-server.example.com in the ignored local.properties file.
+val cloudUrl = java.util.Properties().apply {
+    rootProject.file("local.properties").takeIf { it.isFile }?.inputStream()?.use { load(it) }
+}.getProperty("cloudUrl", "").trimEnd('/')
+require(cloudUrl.isEmpty() || Regex("https?://[A-Za-z0-9.-]+(?::[0-9]+)?").matches(cloudUrl))
+
 android {
     namespace = "com.example.photoviewer"
     compileSdk {
@@ -14,8 +20,12 @@ android {
         targetSdk = 37
         versionCode = 1
         versionName = "1.0"
+        buildConfigField("String", "CLOUD_URL", "\"$cloudUrl\"")
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+    }
+    buildFeatures {
+        buildConfig = true
     }
 
     buildTypes {
